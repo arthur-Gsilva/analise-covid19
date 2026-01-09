@@ -1,0 +1,43 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: covid
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./back
+    container_name: django_api
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./back:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      POSTGRES_DB: covid
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+
+  frontend:
+    build: ./front
+    container_name: next_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:8000
+
+volumes:
+  postgres_data:

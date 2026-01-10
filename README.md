@@ -4,6 +4,10 @@ Este projeto é uma aplicação full stack desenvolvida como desafio técnico, c
 
 A aplicação foi totalmente **dockerizada**, permitindo que qualquer pessoa consiga executá-la localmente sem necessidade de configuração manual de ambiente.
 
+Link para o projeto em deploy:
+
+https://analise-covid19.vercel.app/
+
 ---
 
 ## 📌 Tecnologias Utilizadas
